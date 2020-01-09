@@ -41,13 +41,17 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
         capabilities.setCapability(CapabilityType.PROXY, createProxy());
         LoggingPreferences logPrefs = new LoggingPreferences();
 		logPrefs.enable(LogType.BROWSER, Level.ALL);
-		capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("use-fake-ui-for-media-stream");
+        chromeOptions.addArguments("use-fake-device-for-media-stream");
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         
 
         if(isAndroidEnabled() || isHeadlessEnabled()) {
             //Map<String, String> chromeOptions = new HashMap<String, String>();
             //chromeOptions.put("androidPackage", "com.android.chrome");
-            ChromeOptions chromeOptions = new ChromeOptions();
+            //ChromeOptions chromeOptions = new ChromeOptions();
             if (isAndroidEnabled()) {
                 chromeOptions.setExperimentalOption("androidPackage", "com.android.chrome");
             }
