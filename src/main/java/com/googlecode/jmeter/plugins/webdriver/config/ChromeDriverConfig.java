@@ -23,6 +23,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     private static final long serialVersionUID = 100L;
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
+    private static final String CHROME_DOWNLOAD_PATH = "ChromeDriverConfig.chrome_download_path";
     private static final String ANDROID_ENABLED = "ChromeDriverConfig.android_enabled";
     private static final String HEADLESS_ENABLED = "ChromeDriverConfig.headless_enabled";
     private static final String INSECURECERTS_ENABLED = "ChromeDriverConfig.insecurecerts_enabled";
@@ -31,9 +32,14 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     public void setChromeDriverPath(String path) {
         setProperty(CHROME_SERVICE_PATH, path);
     }
-
+    public void setChromeDownloadPath(String path) {
+        setProperty(CHROME_DOWNLOAD_PATH, path);
+    }
     public String getChromeDriverPath() {
         return getPropertyAsString(CHROME_SERVICE_PATH);
+    }
+    public String getChromeDownloadPath() {
+        return getPropertyAsString(CHROME_DOWNLOAD_PATH);
     }
 
     Capabilities createCapabilities() {
@@ -42,7 +48,11 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
         LoggingPreferences logPrefs = new LoggingPreferences();
 		logPrefs.enable(LogType.BROWSER, Level.ALL);
         capabilities.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("download.default_directory", getChromeDownloadPath());
+        prefs.put("profile.default_content_settings.popups", 0);
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("prefs", prefs);
         chromeOptions.addArguments("use-fake-ui-for-media-stream");
         chromeOptions.addArguments("use-fake-device-for-media-stream");
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
@@ -63,8 +73,8 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
         }
 	if(isInsecureCertsEnabled()) {
 	        capabilities.setCapability("acceptInsecureCerts", true);
-	}
-
+    }
+    
         return capabilities;
     }
 

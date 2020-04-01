@@ -12,6 +12,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
 
     private static final long serialVersionUID = 100L;
     JTextField chromeServicePath;
+    JTextField chromeDownloadPath;
     JCheckBox androidEnabled;
     private JCheckBox headlessEnabled;
     private JCheckBox insecureCertsEnabled;
@@ -32,6 +33,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             chromeServicePath.setText(config.getChromeDriverPath());
+            chromeDownloadPath.setText(config.getChromeDownloadPath());
             androidEnabled.setSelected(config.isAndroidEnabled());
             getHeadlessEnabled().setSelected(config.isHeadlessEnabled());
             getInsecureCertsEnabled().setSelected(config.isInsecureCertsEnabled());
@@ -51,6 +53,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         if(element instanceof ChromeDriverConfig) {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             config.setChromeDriverPath(chromeServicePath.getText());
+            config.setChromeDownloadPath(chromeDownloadPath.getText());
             config.setAndroidEnabled(androidEnabled.isSelected());
             config.setHeadlessEnabled(getHeadlessEnabled().isSelected());
             config.setInsecureCertsEnabled(getInsecureCertsEnabled().isSelected());
@@ -61,6 +64,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     public void clearGui() {
         super.clearGui();
         chromeServicePath.setText("");
+        chromeDownloadPath.setText("");
         androidEnabled.setSelected(false);
         getHeadlessEnabled().setSelected(false);
         getInsecureCertsEnabled().setSelected(false);
@@ -86,9 +90,12 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         final JPanel chromeServicePanel = new HorizontalPanel();
         final JLabel chromeDriverServiceLabel = new JLabel("Path to Chrome Driver");
         chromeServicePanel.add(chromeDriverServiceLabel);
-
         chromeServicePath = new JTextField();
         chromeServicePanel.add(chromeServicePath);
+        final JLabel downloadPathLabel = new JLabel("Path to Download Directory");
+        chromeServicePanel.add(downloadPathLabel);
+        chromeDownloadPath = new JTextField();
+        chromeServicePanel.add(chromeDownloadPath);
         browserPanel.add(chromeServicePanel);
 
         androidEnabled = new JCheckBox("Use Chrome on Android");
