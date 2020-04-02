@@ -67,6 +67,8 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
             }
             if (isHeadlessEnabled()) {
                 chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("--no-sandbox");
+                chromeOptions.addArguments("--disable-gpu");
 
             }
             capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
