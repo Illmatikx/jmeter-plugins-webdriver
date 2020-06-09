@@ -13,6 +13,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
     private static final long serialVersionUID = 100L;
     JTextField chromeServicePath;
     JTextField chromeDownloadPath;
+    JTextField chromeSourceFilePath;
     JCheckBox androidEnabled;
     private JCheckBox headlessEnabled;
     private JCheckBox insecureCertsEnabled;
@@ -34,6 +35,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             chromeServicePath.setText(config.getChromeDriverPath());
             chromeDownloadPath.setText(config.getChromeDownloadPath());
+            chromeSourceFilePath.setText(config.getchromeSourceFilePath());
             androidEnabled.setSelected(config.isAndroidEnabled());
             getHeadlessEnabled().setSelected(config.isHeadlessEnabled());
             getInsecureCertsEnabled().setSelected(config.isInsecureCertsEnabled());
@@ -54,6 +56,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
             ChromeDriverConfig config = (ChromeDriverConfig)element;
             config.setChromeDriverPath(chromeServicePath.getText());
             config.setChromeDownloadPath(chromeDownloadPath.getText());
+            config.setchromeSourceFilePath(chromeSourceFilePath.getText());
             config.setAndroidEnabled(androidEnabled.isSelected());
             config.setHeadlessEnabled(getHeadlessEnabled().isSelected());
             config.setInsecureCertsEnabled(getInsecureCertsEnabled().isSelected());
@@ -65,6 +68,7 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         super.clearGui();
         chromeServicePath.setText("");
         chromeDownloadPath.setText("");
+        chromeSourceFilePath.setText("");
         androidEnabled.setSelected(false);
         getHeadlessEnabled().setSelected(false);
         getInsecureCertsEnabled().setSelected(false);
@@ -97,6 +101,13 @@ public class ChromeDriverConfigGui extends WebDriverConfigGui {
         chromeDownloadPath = new JTextField();
         chromeServicePanel.add(chromeDownloadPath);
         browserPanel.add(chromeServicePanel);
+        //source file panel
+        final JPanel chromeSourceFilePanel = new HorizontalPanel();
+        final JLabel sourceFilePathLabel = new JLabel("Path to Stream Source File");
+        chromeSourceFilePath = new JTextField();
+        chromeSourceFilePanel.add(sourceFilePathLabel);
+        chromeSourceFilePanel.add(chromeSourceFilePath);
+        browserPanel.add(chromeSourceFilePanel);
 
         androidEnabled = new JCheckBox("Use Chrome on Android");
         browserPanel.add(androidEnabled);

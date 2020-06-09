@@ -24,6 +24,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     private static final Logger LOGGER = LoggingManager.getLoggerForClass();
     private static final String CHROME_SERVICE_PATH = "ChromeDriverConfig.chromedriver_path";
     private static final String CHROME_DOWNLOAD_PATH = "ChromeDriverConfig.chrome_download_path";
+    private static final String CHROME_SOURCE_FILE_PATH = "ChromeDriverConfig.chrome_source_file_path";
     private static final String ANDROID_ENABLED = "ChromeDriverConfig.android_enabled";
     private static final String HEADLESS_ENABLED = "ChromeDriverConfig.headless_enabled";
     private static final String INSECURECERTS_ENABLED = "ChromeDriverConfig.insecurecerts_enabled";
@@ -35,11 +36,17 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
     public void setChromeDownloadPath(String path) {
         setProperty(CHROME_DOWNLOAD_PATH, path);
     }
+    public void setchromeSourceFilePath(String path) {
+        setProperty(CHROME_SOURCE_FILE_PATH, path);
+    }
     public String getChromeDriverPath() {
         return getPropertyAsString(CHROME_SERVICE_PATH);
     }
     public String getChromeDownloadPath() {
         return getPropertyAsString(CHROME_DOWNLOAD_PATH);
+    }
+    public String getchromeSourceFilePath() {
+        return getPropertyAsString(CHROME_SOURCE_FILE_PATH);
     }
 
     Capabilities createCapabilities() {
@@ -55,6 +62,7 @@ public class ChromeDriverConfig extends WebDriverConfig<ChromeDriver> {
         chromeOptions.setExperimentalOption("prefs", prefs);
         chromeOptions.addArguments("use-fake-ui-for-media-stream");
         chromeOptions.addArguments("use-fake-device-for-media-stream");
+        chromeOptions.addArguments("use-file-for-fake-video-capture=" + getchromeSourceFilePath());
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         
 
